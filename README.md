@@ -9,6 +9,8 @@ The following **required** functionality is completed:
 * [ ] User can select a difficulty ranging from easy to hard. (easy = numbers < 10, medium = numbers < 25, hard = numbers < 50).
 * [ ] User can select different operations for the questions (addition, multiplication, subtraction, division).
 * [ ] SafeArgs is used to carry user input/data from fragment to fragment using a navigator for a seamless user experience.
+* [ ] User can see their score after completion of the quiz
+* [ ] User hears the correct sounds for each correct and incorrect answer.
 
 The following **extensions** are implemented:
 
