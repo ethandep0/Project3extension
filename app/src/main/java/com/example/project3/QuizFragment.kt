@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import java.util.Random
 
@@ -45,6 +46,7 @@ class QuizFragment : Fragment() {
         // IMPORT VARIABLES FROM StartFragment (difficulty, operation, questionCount) USING SAFE ARGS
         val difficulty = QuizFragmentArgs.fromBundle(requireArguments()).difficulty
         val operation = QuizFragmentArgs.fromBundle(requireArguments()).operation
+        val receivedCorrect = StartFragmentArgs.fromBundle(requireArguments()).correct
         val questionCount = QuizFragmentArgs.fromBundle(requireArguments()).questionCount
 
         var questions = arrayListOf<String>() // store questions here
@@ -134,22 +136,27 @@ class QuizFragment : Fragment() {
                 val correctAnswer = answers[currentQuestionNumber].toString()
                 if (userResponse == correctAnswer) {
                     correct += 1
+                    val toastMessage = "Correct. Good work!"
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
                 } else {
+                    val toastMessage = "Wrong"
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
                     wrong += 1
                 }
                 currentQuestionNumber += 1
 //
                 if (currentQuestionNumber == questionCount) { //goto next screen
-
-                    val navController = findNavController()
-                    val action = QuizFragmentDirections.actionQuizFragmentToResultFragment(correct,questionCount)
+                    val action = QuizFragmentDirections.actionQuizFragmentToStartFragment(correct, questionCount, difficulty, operation)
+                    findNavController().navigate(action)
                     navController.navigate(action)
+
                 } else {
                     // Update the question for the next round
                     userAnswer.text = ""
                     updateQuestion(questions[currentQuestionNumber])
             }
             }
+
         }
 
         return view
