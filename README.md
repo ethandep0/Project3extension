@@ -9,6 +9,8 @@ The following **required** functionality is completed:
 * [ ] User can select a difficulty ranging from easy to hard. (easy = numbers < 10, medium = numbers < 25, hard = numbers < 50).
 * [ ] User can select different operations for the questions (addition, multiplication, subtraction, division).
 * [ ] SafeArgs is used to carry user input/data from fragment to fragment using a navigator for a seamless user experience.
+
+NEW
 * [ ] User can see their score after completion of the quiz
 * [ ] User hears the correct sounds for each correct and incorrect answer.
 
@@ -28,7 +30,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-It was rather difficult to figure out how to use NavController with fragments at first. After I figured out the first one though it was much easier. Additionally, I had trouble with generating the questions according to the user's input as well as using SafeArgs to carry the data from fragment to fragment. Thankfully I was able to figure both issues out.
+We had trouble with implementing SafeArgs and checking to see if it was the first time the app was run so no score would be shown on first run. Additionally, the sounds
+and toasts took a bit of trouble but we were about to figure it out.
 
 ## License
 

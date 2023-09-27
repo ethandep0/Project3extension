@@ -46,10 +46,8 @@ class QuizFragment : Fragment() {
 
         // IMPORT VARIABLES FROM StartFragment (difficulty, operation, questionCount) USING SAFE ARGS
         val difficulty = QuizFragmentArgs.fromBundle(requireArguments()).difficulty
-        val operation = QuizFragmentArgs.fromBundle(requireArguments()).operation
-        val receivedCorrect = StartFragmentArgs.fromBundle(requireArguments()).correct
         val questionCount = QuizFragmentArgs.fromBundle(requireArguments()).questionCount
-
+        val operation = QuizFragmentArgs.fromBundle(requireArguments()).operation
 
         var questions = arrayListOf<String>() // store questions here
         var answers = arrayListOf<Int>() // store answers here
@@ -140,10 +138,12 @@ class QuizFragment : Fragment() {
                     it.start()
                 }
                 if (userResponse == correctAnswer) {
-                    correct += 1
+                    //correct sound
                     Toast.makeText(context, "Correct. Good work!", Toast.LENGTH_SHORT).show()
                     MediaPlayer.create(context, R.raw.correct).start()
+                    correct += 1
                 } else {
+                    //wrong sound
                     Toast.makeText(context, "Wrong", Toast.LENGTH_SHORT).show()
                     MediaPlayer.create(context, R.raw.wrong).start()
                     wrong += 1
@@ -155,9 +155,10 @@ class QuizFragment : Fragment() {
                 currentQuestionNumber += 1
 //
                 if (currentQuestionNumber == questionCount) { //go to next screen
-                    // Replace totalQuestions with the correct variable representing the total questions
-                    val action = QuizFragmentDirections.actionQuizFragmentToStartFragment(correct, questions.size, difficulty, operation, questionCount)
-                    findNavController().navigate(action)
+                    // Send correct/totalQuestion to start.
+                    val action = QuizFragmentDirections.actionQuizFragmentToStartFragment(correct, questionCount)
+                    val navController = findNavController()
+                    navController.navigate(action)
                 } else {
                     // Update the question for the next round
                     userAnswer.text = ""
