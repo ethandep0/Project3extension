@@ -25,24 +25,21 @@ class StartFragment : Fragment() {
         var questionCount = 0
         var difficulty = ""
         var operation = ""
-
-        val score = StartFragmentArgs.fromBundle(requireArguments()).correct
+        val score = StartFragmentArgs.fromBundle(requireArguments()).score
         val totalQuestions = StartFragmentArgs.fromBundle(requireArguments()).totalQuestions
 
 
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_start, container, false)
-        if (score != -1 && totalQuestions != -1) {
+        if (score != null && totalQuestions != null && score >= 0 && totalQuestions > 0) {
             val percentage = (score.toFloat() / totalQuestions) * 100
             val resultTextView: TextView = view.findViewById(R.id.your_score) // You need to create this TextView in your fragment's layout file.
             if (percentage >= 80) {
-                val result = "Congratulations! You scored $score out of $totalQuestions."
-                resultTextView.text = result
+                resultTextView.text = "Congratulations! You scored $score out of $totalQuestions."
                 resultTextView.setTextColor(Color.GREEN)
             } else {
-                val resultBad = "You scored $score out of $totalQuestions. Better luck next time!"
-                resultTextView.text = resultBad
+                resultTextView.text = "You scored $score out of $totalQuestions. Better luck next time!"
                 resultTextView.setTextColor(Color.RED)
             }
         }
@@ -107,7 +104,7 @@ class StartFragment : Fragment() {
         startButton.setOnClickListener {
             if (difficulty.isNotEmpty() && operation.isNotEmpty() && questionCount != 0) {
                 //pass variables in safe args and goto next screen.
-                val action = StartFragmentDirections.actionStartFragmentToQuizFragment(operation, questionCount, difficulty)
+                val action = StartFragmentDirections.actionStartFragmentToQuizFragment(difficulty, questionCount, operation)
                 val navController = findNavController()
                 navController.navigate(action)
             }
