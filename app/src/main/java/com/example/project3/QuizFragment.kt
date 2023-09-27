@@ -1,6 +1,7 @@
 package com.example.project3
 
 import android.os.Bundle
+import android.media.MediaPlayer
 import com.example.project3.R
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -48,6 +49,7 @@ class QuizFragment : Fragment() {
         val operation = QuizFragmentArgs.fromBundle(requireArguments()).operation
         val receivedCorrect = StartFragmentArgs.fromBundle(requireArguments()).correct
         val questionCount = QuizFragmentArgs.fromBundle(requireArguments()).questionCount
+
 
         var questions = arrayListOf<String>() // store questions here
         var answers = arrayListOf<Int>() // store answers here
@@ -126,7 +128,6 @@ class QuizFragment : Fragment() {
 
         // now you can do the quiz stuff here.
 
-
         //done button, navigates to the next screen if last question.
         val doneButton: Button = view.findViewById(R.id.doneButton)
         doneButton.setOnClickListener {
@@ -134,22 +135,29 @@ class QuizFragment : Fragment() {
 //
             if (userResponse.isNotEmpty()) { //check if answer is correct
                 val correctAnswer = answers[currentQuestionNumber].toString()
+                val mediaPlayer = MediaPlayer.create(context, if (userResponse == correctAnswer) R.raw.correct else R.raw.wrong)
+                mediaPlayer.setOnPreparedListener {
+                    it.start()
+                }
                 if (userResponse == correctAnswer) {
                     correct += 1
-                    val toastMessage = "Correct. Good work!"
-                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Correct. Good work!", Toast.LENGTH_SHORT).show()
+                    MediaPlayer.create(context, R.raw.correct).start()
                 } else {
-                    val toastMessage = "Wrong"
-                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Wrong", Toast.LENGTH_SHORT).show()
+                    MediaPlayer.create(context, R.raw.wrong).start()
                     wrong += 1
                 }
+                mediaPlayer.setOnCompletionListener {
+                    it.release()
+                }
+
                 currentQuestionNumber += 1
 //
-                if (currentQuestionNumber == questionCount) { //goto next screen
-                    val action = QuizFragmentDirections.actionQuizFragmentToStartFragment(correct, questionCount, difficulty, operation)
+                if (currentQuestionNumber == questionCount) { //go to next screen
+                    // Replace totalQuestions with the correct variable representing the total questions
+                    val action = QuizFragmentDirections.actionQuizFragmentToStartFragment(correct, questions.size, difficulty, operation, questionCount)
                     findNavController().navigate(action)
-                    navController.navigate(action)
-
                 } else {
                     // Update the question for the next round
                     userAnswer.text = ""

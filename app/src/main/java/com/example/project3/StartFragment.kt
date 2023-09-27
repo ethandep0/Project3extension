@@ -103,9 +103,8 @@ class StartFragment : Fragment() {
         val startButton: Button = view.findViewById(R.id.startButton)
         startButton.setOnClickListener {
             if (difficulty.isNotEmpty() && operation.isNotEmpty() && questionCount != 0) {
-
                 //pass variables in safe args and goto next screen.
-                val action = StartFragmentDirections.actionStartFragmentToQuizFragment(difficulty, operation, questionCount)
+                val action = StartFragmentDirections.actionStartFragmentToQuizFragment(difficulty, questionCount, operation)
                 val navController = findNavController()
                 navController.navigate(action)
             }

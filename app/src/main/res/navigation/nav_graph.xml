@@ -14,9 +14,6 @@
             android:id="@+id/action_startFragment_to_quizFragment"
             app:destination="@id/quizFragment" />
         <argument
-            android:name="questionCount"
-            app:argType="integer" />
-        <argument
             android:name="correct"
             app:argType="integer"
             android:defaultValue="-1" />
@@ -26,16 +23,6 @@
             android:defaultValue="-1" />
         <argument
             android:name="totalQuestions"
-            app:argType="integer"
-            android:defaultValue="-1" />
-        <argument
-            android:name="difficulty"
-            app:argType="string" />
-        <argument
-            android:name="operation"
-            app:argType="string" />
-        <argument
-            android:name="questionCount"
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
@@ -51,7 +38,7 @@
                 android:name="correct"
                 app:argType="integer" />
             <argument
-                android:name="questionCount"
+                android:name="totalQuestions"
                 app:argType="integer" />
             <argument
                 android:name="difficulty"
@@ -59,6 +46,18 @@
             <argument
                 android:name="operation"
                 app:argType="string" />
+            <argument
+                android:name="questionCount"
+                app:argType="integer" />
         </action>
+        <argument
+            android:name="operation"
+            app:argType="string" />
+        <argument
+            android:name="questionCount"
+            app:argType="integer" />
+        <argument
+            android:name="difficulty"
+            app:argType="string" />
     </fragment>
 </navigation>
